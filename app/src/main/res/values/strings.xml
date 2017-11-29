@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">book list</string>
+    <string name="app_name">书籍列表</string>
+    <string name="search_hint">请输入书名进行查询...</string>
+
+    <string name="no_network_connection">无法连接网络，请检查连接设置</string>
+    <string name="no_result">无法获取书籍列表</string>
+    <string name="search">搜索</string>
 </resources>
