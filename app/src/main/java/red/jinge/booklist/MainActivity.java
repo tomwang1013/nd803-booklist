@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     TextView textViewEmpty;
     ProgressBar progressBarLoading;
     BookAdapter bookAdapter;
+    BookAsyncTaskLoader bookLoader;
+
 
     private static final String DOUBAN_BOOK_URL = "https://api.douban.com/v2/book/search?q=";
 
@@ -64,18 +66,25 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (activeNetwork == null || !activeNetwork.isConnectedOrConnecting()) {
             progressBarLoading.setVisibility(View.GONE);
             textViewEmpty.setText(R.string.no_network_connection);
+        } else {
+            bookLoader = (BookAsyncTaskLoader) getLoaderManager().initLoader(0, null, this);
         }
     }
 
+    /**
+     * 输入搜索词点击搜索
+     * @param view 搜索按钮
+     */
     public void startSearch(View view) {
+        String keyword = searchViewKeyword.getText().toString();
         progressBarLoading.setVisibility(View.VISIBLE);
-        getLoaderManager().initLoader(0, null, this);
+        bookLoader.setmRequestUrl(DOUBAN_BOOK_URL + keyword);
+        bookLoader.forceLoad();
     }
 
     @Override
     public Loader<List<Book>> onCreateLoader(int id, Bundle args) {
-        String keyword = searchViewKeyword.getText().toString();
-        return new BookAsyncTaskLoader(this, DOUBAN_BOOK_URL + keyword);
+        return new BookAsyncTaskLoader(this, "");
     }
 
     @Override

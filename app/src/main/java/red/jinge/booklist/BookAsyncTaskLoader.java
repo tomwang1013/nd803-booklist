@@ -12,12 +12,6 @@ import java.util.List;
 public class BookAsyncTaskLoader extends AsyncTaskLoader<List<Book>> {
     String mRequestUrl;
 
-    @Override
-    protected void onStartLoading() {
-        forceLoad();
-    }
-
-
     public BookAsyncTaskLoader(Context context, String requestUrl) {
         super(context);
         mRequestUrl = requestUrl;
@@ -26,5 +20,9 @@ public class BookAsyncTaskLoader extends AsyncTaskLoader<List<Book>> {
     @Override
     public List<Book> loadInBackground() {
         return QueryUtil.fetchBookList(mRequestUrl);
+    }
+
+    public void setmRequestUrl(String mRequestUrl) {
+        this.mRequestUrl = mRequestUrl;
     }
 }
